@@ -5,7 +5,7 @@ import { Link } from 'gatsby';
 
 const ErrorPage = () => {
   return (
-    <Layout>
+    <Layout pathname={location.pathname}>
       <ErrorContainer>
         <ErrorTitle>Page Not Found</ErrorTitle>
         <ErrorDescription>

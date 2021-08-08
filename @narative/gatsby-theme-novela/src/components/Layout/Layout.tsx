@@ -13,7 +13,7 @@ import { globalStyles } from '@styles';
  * and the main structure of each page. Within Layout we have the <Container />
  * which hides a lot of the mess we need to create our Desktop and Mobile experiences.
  */
-const Layout: React.FC<{}> = ({ children }) => {
+const Layout: React.FC<{ pathname: string }> = ({ pathname, children }) => {
   const [colorMode] = useColorMode();
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Layout: React.FC<{}> = ({ children }) => {
   return (
     <Container>
       <Global styles={globalStyles} />
-      <NavigationHeader />
+      <NavigationHeader pathname={pathname} />
       {children}
       <NavigationFooter />
     </Container>

@@ -5,7 +5,7 @@ import { Link } from 'gatsby';
 
 const BioPage = () => {
   return (
-    <Layout>
+    <Layout pathname={location.pathname}>
       <ErrorContainer>
         <ErrorTitle>Sorry!</ErrorTitle>
         <ErrorDescription>
