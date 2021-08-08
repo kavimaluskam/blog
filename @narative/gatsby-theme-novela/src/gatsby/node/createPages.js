@@ -69,15 +69,13 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
 
   console.log(sources);
   // Defaulting to look at the local MDX files as sources.
-  const { local = true, contentful = false } = sources;
+  const { local = true } = sources;
 
   let authors;
   let articles;
 
   const dataSources = {
     local: { authors: [], articles: [] },
-    contentful: { authors: [], articles: [] },
-    netlify: { authors: [], articles: [] },
   };
 
   if (rootPath) {
@@ -107,42 +105,13 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     }
   }
 
-  if (contentful) {
-    try {
-      log('Querying Authors & Articles source:', 'Contentful');
-      const contentfulAuthors = await graphql(query.contentful.authors);
-      const contentfulArticles = await graphql(query.contentful.articles);
-
-      dataSources.contentful.authors = contentfulAuthors.data.authors.edges.map(
-        normalize.contentful.authors,
-      );
-
-      dataSources.contentful.articles = contentfulArticles.data.articles.edges.map(
-        normalize.contentful.articles,
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
   // Combining together all the articles from different sources
-  articles = [
-    ...dataSources.local.articles,
-    ...dataSources.contentful.articles,
-    ...dataSources.netlify.articles,
-  ].sort(byDate);
+  articles = [...dataSources.local.articles].sort(byDate);
 
   const articlesThatArentSecret = articles.filter(article => !article.secret);
 
   // Combining together all the authors from different sources
-  authors = getUniqueListBy(
-    [
-      ...dataSources.local.authors,
-      ...dataSources.contentful.authors,
-      ...dataSources.netlify.authors,
-    ],
-    'name',
-  );
+  authors = getUniqueListBy([...dataSources.local.authors], 'name');
 
   if (articles.length === 0 || authors.length === 0) {
     throw new Error(`

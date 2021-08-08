@@ -65,7 +65,6 @@ We have stopped maintainig this project. There will be occassional PR reviews an
 - [Data Sources](#data-sources)
 
   - [Local](#local)
-  - [Contentful](#contentful)
 
 - [Customization](#customization)
 
@@ -285,70 +284,9 @@ If you ran into problems you can reference the [example repository](https://gith
 
 # Data Sources
 
-With the flexibility of Gatsby, Novela is able to pull different data sources to build your website. Right now we support Contentful and your local file system. All data sources can be combined together or used separately.
-
-### Local
-
 Local is the default data source for Novela. Write MDX and YAML in order to generate posts and authors. This is the fastest and simplest way to get started.
 
 To learn how to use the local file system, read the [Installation](#installation) steps.
-
-### Contentful
-
-Contentful provides the flexibility of a headless CMS which allows you to write content without committing new files and working in a text editor. The setup process is simple if you are familiar with Contentful.
-
-You will need to setup your Contentful space and import the Novela model.
-
-#### Setting up `gatsby-source-contentful` in your project
-
-In order to use Contentful you must first install the plugin and `dotenv` in your project
-
-```sh
-yarn add gatsby-source-contentful dotenv
-```
-
-Then pass in the environment variables `.env` to the plugin
-
-#### `.env`
-
-```
-CONTENTFUL_SPACE_ID= (Your Contentful Space ID)
-CONTENTFUL_ACCESS_TOKEN= (Your Content Delivery API - access token)
-```
-
-#### `gatsby-config.js`
-
-```js
-require('dotenv').config();
-
-plugins: [
-  {
-    resolve: 'gatsby-source-contentful',
-    options: {
-      spaceId: process.env.CONTENTFUL_SPACE_ID,
-      accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
-    },
-  },
-  {
-    resolve: '@narative/gatsby-theme-novela',
-    options: {
-      sources: {
-        contentful: true,
-      },
-    },
-  },
-];
-```
-
-Finally, import the Contentful Model from Novela to get started. Novela Contentful Queries will not work without this exact data model.
-
-#### [Novela Contentful Data](https://github.com/narative/gatsby-theme-novela/tree/master/%40narative/gatsby-theme-novela/contentful)
-
-[Contentful space import docs](https://github.com/contentful/contentful-cli/tree/master/docs/space/import)
-
-Once you have your project setup with `gatsby-source-contentful` and `@narative/gatsby-theme-novela` and your Contentful space is setup with the imported model you are good to go.
-
-⚠️ Please make sure you have at least one Media Asset uploaded or you will run into a GraphQL error: https://github.com/gatsbyjs/gatsby/issues/15397
 
 # Customization
 
@@ -545,7 +483,6 @@ It is recommended to use the Default options, but if your project requires somet
 | articlePermalinkFormat |      :slug      | Define the format of the article permalink. Possible values: `:slug`, `:year`, `:month`, `:day`. Example: `:year/:month/:day/:slug` |
 | mailchimp              |      false      |                                             Enable Mailchimp subscriptions on each Post                                             |
 | sources.local          |      true       |                                                Enable local file system data source                                                 |
-| sources.contentful     |      false      |                                                    Enable Contentful data source                                                    |
 
 [View Theme option example](https://github.com/narative/gatsby-theme-novela-example/blob/master/gatsby-config.js#L36)
 
@@ -562,7 +499,6 @@ plugins: [
       mailchimp: true,
       sources: {
         local: true,
-        contentful: true,
       },
     },
   },
@@ -733,7 +669,6 @@ Navigable by cursor or keyboard, readable via screens and screen readers, Novela
 
 This project is early in development and we are interested in creating an even more extensible experience, and increased out-of-box functionality, including:
 
-- Data sources such as Prismic, Sanity, Contentful, Netlify CMS, and others
 - Built in search with Algolia or similar
 - Tags, categories, and more
 - More theme variations

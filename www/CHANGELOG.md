@@ -266,8 +266,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * Fix build by changing source to local for www ([9de7d0f](https://github.com/narative/gatsby-theme-novela/commit/9de7d0feb7aedb6105a308b12141b76aef4cf577))
-* **contentful:** source works now without local ([3299592](https://github.com/narative/gatsby-theme-novela/commit/329959220705c095ba6ce7798a3779e022bb56d6))
-
 
 ### Features
 

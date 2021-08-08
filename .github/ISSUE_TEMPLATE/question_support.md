@@ -15,7 +15,6 @@ assignees: ''
 
 ### Number of posts you have and which data source
 * [ ] Local
-* [ ] Contentful
 
 ### What are you trying to achieve?
 
