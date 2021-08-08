@@ -26,30 +26,22 @@ const siteMetadata = {
     {
       url: `https://www.linkedin.com/company/narative/`,
     },
+  header: {
+    navigation: [
     {
-      url: `https://dribbble.com/narativestudio`,
+        label: "Blog",
+        url: "/",
     },
     {
-      url: `https://youtube.com`,
+        label: "Links",
+        url: "/links",
     },
     {
-      name: 'stackoverflow',
-      url: `https://bit.ly/1x0885j`,
-    },
-    {
-      url: `https://digitalocean.com`,
-    },
-    {
-      url: `https://tripadvisor.com`,
-    },
-    {
-      url: `https://notion.so`,
-    },
-    {
-      name: `mailto`,
-      url: `mailto:`,
+        label: "Bio",
+        url: "/bio",
     },
   ],
+  }
 };
 
 const plugins = [

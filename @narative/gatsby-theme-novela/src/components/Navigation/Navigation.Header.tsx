@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { Link, navigate, graphql, useStaticQuery } from 'gatsby';
 import { useColorMode } from 'theme-ui';
@@ -6,16 +6,18 @@ import { useColorMode } from 'theme-ui';
 import Section from '@components/Section';
 import Logo from '@components/Logo';
 
-import Icons from '@icons';
 import mediaqueries from '@styles/media';
-import { getWindowDimensions, getBreakpointFromTheme } from '@utils';
 
 const siteQuery = graphql`
   {
-    sitePlugin(name: { eq: "@narative/gatsby-theme-novela" }) {
-      pluginOptions {
-        rootPath
-        basePath
+    site {
+      siteMetadata {
+        header {
+          navigation {
+            label
+            url
+          }
+        }
       }
     }
   }
@@ -45,61 +47,50 @@ const DarkModeToggle: React.FC<{}> = () => {
 };
 
 const NavigationHeader: React.FC<{}> = () => {
-  const [showBackArrow, setShowBackArrow] = useState<boolean>(false);
-  const [previousPath, setPreviousPath] = useState<string>('/');
-  const { sitePlugin } = useStaticQuery(siteQuery);
+  const {
+    site: {
+      siteMetadata: {
+        header: { navigation },
+      },
+    },
+  } = useStaticQuery(siteQuery);
 
   const [colorMode] = useColorMode();
   const fill = colorMode === 'dark' ? '#fff' : '#000';
-  const { rootPath, basePath } = sitePlugin.pluginOptions;
-
-  useEffect(() => {
-    const { width } = getWindowDimensions();
-    const phablet = getBreakpointFromTheme('phablet');
-
-    const prev = localStorage.getItem('previousPath');
-    const previousPathWasHomepage =
-      prev === (rootPath || basePath) || (prev && prev.includes('/page/'));
-    const currentPathIsHomepage =
-      location.pathname === (rootPath || basePath) ||
-      location.pathname.includes('/page/');
-
-    setShowBackArrow(
-      previousPathWasHomepage && !currentPathIsHomepage && width <= phablet,
-    );
-    setPreviousPath(prev);
-  }, []);
 
   return (
     <Section>
       <NavContainer>
         <LogoLink
-          to={rootPath || basePath}
+          to="/"
           data-a11y="false"
           title="Navigate back to the homepage"
           aria-label="Navigate back to the homepage"
-          back={showBackArrow ? 'true' : 'false'}
         >
-          {showBackArrow && (
-            <BackArrowIconContainer>
-              <Icons.ChevronLeft fill={fill} />
-            </BackArrowIconContainer>
-          )}
           <Logo fill={fill} />
           <Hidden>Navigate back to the homepage</Hidden>
         </LogoLink>
         <NavControls>
-          {showBackArrow ? (
-            <button
-              onClick={() => navigate(previousPath)}
-              title="Navigate back to the homepage"
-              aria-label="Navigate back to the homepage"
-            >
-              <Icons.Ex fill={fill} />
-            </button>
-          ) : (
+          <NavbarLinksContainer>
+            {navigation.map(({ url, label }, index) => {
+              return (
+                <NavLink
+                  key={index}
+                  to={url}
+                  activeClassName={location.pathname == url ? 'active' : ''}
+                  data-a11y="false"
+                  title={label}
+                  aria-label={label}
+                >
+                  {label}
+                </NavLink>
+              );
+            })}
+          </NavbarLinksContainer>
+
+          <NavControlsSettings>
             <DarkModeToggle />
-          )}
+          </NavControlsSettings>
         </NavControls>
       </NavContainer>
     </Section>
@@ -141,11 +132,11 @@ const NavContainer = styled.div`
   }
 `;
 
-const LogoLink = styled(Link)<{ back: string }>`
+const LogoLink = styled(Link)`
   position: relative;
   display: flex;
   align-items: center;
-  left: ${p => (p.back === 'true' ? '-54px' : 0)};
+  left: 0;
 
   ${mediaqueries.desktop_medium`
     left: 0
@@ -174,37 +165,62 @@ const NavControls = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-
-  ${mediaqueries.phablet`
-    right: -5px;
+  ${mediaqueries.tablet`
+    padding: 20px 8px;
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+    display: none;
+    &.menu-toggled {
+      display: flex
+    }
   `}
 `;
 
-const ToolTip = styled.div<{ isDark: boolean; hasCopied: boolean }>`
-  position: absolute;
-  padding: 4px 13px;
-  background: ${p => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
-  color: ${p => (p.isDark ? '#fff' : '#000')};
-  border-radius: 5px;
-  font-size: 14px;
-  top: -35px;
-  opacity: ${p => (p.hasCopied ? 1 : 0)};
-  transform: ${p => (p.hasCopied ? 'translateY(-3px)' : 'none')};
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+const NavbarLinksContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-right: auto;
+  margin-left: 60px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  ${mediaqueries.tablet`
+    margin-left: 0;
+    margin-top: 3px;
+    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+  `}
+`;
 
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -6px;
-    margin: 0 auto;
-    width: 0;
-    height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid ${p => (p.isDark ? '#000' : 'rgba(0,0,0,0.1)')};
+const NavLink = styled(Link)`
+  color: ${p => p.theme.colors.grey};
+  margin-right: 32px;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  font-size: 18px;
+  &:hover {
+    color: ${p => p.theme.colors.primary};
   }
+  &.active {
+    color: ${p => p.theme.colors.primary};
+  }
+  ${mediaqueries.tablet`
+    margin-right: 0;
+    margin-bottom: 20px;
+  `}
+`;
+
+const NavControlsSettings = styled.div`
+  display: flex;
+  align-items: center;
+  ${mediaqueries.tablet`
+    width: 100%;
+    justify-content: flex-end;
+  `}
 `;
 
 const IconWrapper = styled.button<{ isDark: boolean }>`
