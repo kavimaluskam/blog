@@ -48,8 +48,7 @@ const ArticleSEO: React.FC<ArticleSEOProps> = ({
       timeToRead={article.timeToRead}
       title={article.title}
       isSecret={article.secret}
-    >
-    </SEO>
+    ></SEO>
   );
 };
 

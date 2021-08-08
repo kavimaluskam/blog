@@ -81,7 +81,7 @@ module.exports = ({
               }
             }
             `,
-          output: '/rss.xml',
+            output: '/rss.xml',
           },
         ],
       },
@@ -111,12 +111,12 @@ module.exports = ({
             resolve: `@raae/gatsby-remark-oembed`,
             options: {
               providers: {
-                include: ["Instagram"]
-              }
-            }
+                include: ['Instagram'],
+              },
+            },
           },
           {
-            resolve: "gatsby-remark-embed-video",
+            resolve: 'gatsby-remark-embed-video',
             options: {
               width: 680,
               ratio: 1.77, // Optional: Defaults to 16/9 = 1.77
@@ -126,10 +126,11 @@ module.exports = ({
               urlOverrides: [
                 {
                   id: 'youtube',
-                  embedURL: (videoId) => `https://www.youtube-nocookie.com/embed/${videoId}`,
-                }
-              ] //Optional: Override URL of a service provider, e.g to enable youtube-nocookie support
-            }
+                  embedURL: videoId =>
+                    `https://www.youtube-nocookie.com/embed/${videoId}`,
+                },
+              ], //Optional: Override URL of a service provider, e.g to enable youtube-nocookie support
+            },
           },
           { resolve: `gatsby-remark-copy-linked-files` },
           { resolve: `gatsby-remark-numbered-footnotes` },

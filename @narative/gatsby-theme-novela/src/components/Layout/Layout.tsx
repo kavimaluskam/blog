@@ -28,7 +28,7 @@ const Layout: React.FC<{}> = ({ children }) => {
       <NavigationFooter />
     </Container>
   );
-}
+};
 
 export default Layout;
 
