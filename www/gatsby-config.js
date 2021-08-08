@@ -12,35 +12,41 @@ const siteMetadata = {
   },
   social: [
     {
-      url: `https://twitter.com/narative`,
+      name: `twitter`,
+      url: `https://twitter.com/kavimaluskam`,
     },
     {
-      url: `https://behance.com/narative`,
+      name: `github`,
+      url: `https://github.com/kavimaluskam`,
     },
     {
-      url: `https://github.com/narative`,
+      name: `linkedin`,
+      url: `https://www.linkedin.com/in/kavimaluskam/`,
     },
     {
-      url: `https://instagram.com/narative.co`,
+      name: `medium`,
+      url: `https://medium.com/@kavimaluskam`,
     },
     {
-      url: `https://www.linkedin.com/company/narative/`,
-    },
-  header: {
-    navigation: [
-    {
-        label: "Blog",
-        url: "/",
-    },
-    {
-        label: "Links",
-        url: "/links",
-    },
-    {
-        label: "Bio",
-        url: "/bio",
+      name: `mailto`,
+      url: `mailto:kavimaluskam@gmail.com`,
     },
   ],
+  header: {
+    navigation: [
+      {
+        label: "Blog",
+        url: "/",
+      },
+      {
+        label: "Links",
+        url: "/links",
+      },
+      {
+        label: "Bio",
+        url: "/bio",
+      },
+    ],
   }
 };
 
