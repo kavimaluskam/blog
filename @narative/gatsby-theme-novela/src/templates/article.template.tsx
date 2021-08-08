@@ -82,7 +82,7 @@ const Article: Template = ({ pageContext, location }) => {
   }, []);
 
   return (
-    <Layout>
+    <Layout pathname={location.pathname}>
       <ArticleSEO article={article} location={location} />
       <ArticleHero article={article} />
       <ArticleAside contentHeight={contentHeight}>

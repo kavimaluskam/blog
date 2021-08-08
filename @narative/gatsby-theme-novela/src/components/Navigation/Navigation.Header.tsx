@@ -46,7 +46,7 @@ const DarkModeToggle: React.FC<{}> = () => {
   );
 };
 
-const NavigationHeader: React.FC<{}> = () => {
+const NavigationHeader: React.FC<{ pathname: string }> = ({ pathname }) => {
   const {
     site: {
       siteMetadata: {
@@ -77,7 +77,7 @@ const NavigationHeader: React.FC<{}> = () => {
                 <NavLink
                   key={index}
                   to={url}
-                  activeClassName={location.pathname == url ? 'active' : ''}
+                  activeClassName={pathname == url ? 'active' : ''}
                   data-a11y="false"
                   title={label}
                   aria-label={label}

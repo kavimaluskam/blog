@@ -3,9 +3,9 @@ import Layout from '@components/Layout';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 
-const ErrorPage = () => {
+const ErrorPage = ({ location }) => {
   return (
-    <Layout>
+    <Layout pathname={location.pathname}>
       <ErrorContainer>
         <ErrorTitle>Page Not Found</ErrorTitle>
         <ErrorDescription>
