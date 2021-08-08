@@ -1,13 +1,14 @@
 require("dotenv").config();
 
 const siteMetadata = {
-  title: `Novela by Narative`,
-  name: `Narative`,
-  siteUrl: `https://novela.narative.co`,
-  description: `This is my description that will be used in the meta tags and important for search results`,
+  title: `Alex Kam`,
+  name: `Alex Kam`,
+  siteUrl: `https://kavimaluskam.dev`,
+  description: `About Data Engineering, Decentrailization, Shoegaze and Manga`,
   hero: {
-    heading: `Welcome to Novela, the simplest way to start publishing with Gatsby.`,
-    maxWidth: 652,
+    heading: `Alex Kam`,
+    description: `About Data Engineering, Decentrailization, Shoegaze and Manga`,
+    maxWidth: 600,
   },
   social: [
     {
