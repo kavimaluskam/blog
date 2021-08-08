@@ -6,7 +6,7 @@ const slugify = require('slugify');
 // Create fields for post slugs and source
 // This will change with schema customization with work
 module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
-  const { createNode, createNodeField, createParentChildLink } = actions;
+  const { createNode, createParentChildLink } = actions;
   const contentPath = themeOptions.contentPath || 'content/posts';
   const basePath = themeOptions.basePath || '/';
   const articlePermalinkFormat = themeOptions.articlePermalinkFormat || ':slug';
@@ -46,45 +46,8 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
   }
 
   // ///////////////////////////////////////////////////////
-
-  if (node.internal.type === `AuthorsYaml`) {
-    const slug = node.slug
-      ? `/${node.slug}`
-      : slugify(node.name, {
-          lower: true,
-        });
-
-    const fieldData = {
-      ...node,
-      authorsPage: themeOptions.authorsPage || false,
-      slug: generateSlug(basePath, 'authors', slug),
-    };
-
-    createNode({
-      ...fieldData,
-      // Required fields.
-      id: createNodeId(`${node.id} >>> Author`),
-      parent: node.id,
-      children: [],
-      internal: {
-        type: `Author`,
-        contentDigest: crypto
-          .createHash(`md5`)
-          .update(JSON.stringify(fieldData))
-          .digest(`hex`),
-        content: JSON.stringify(fieldData),
-        description: `Author`,
-      },
-    });
-
-    createParentChildLink({ parent: fileNode, child: node });
-
-    return;
-  }
-
   if (node.internal.type === `Mdx` && source === contentPath) {
     const fieldData = {
-      author: node.frontmatter.author,
       date: node.frontmatter.date,
       hero: node.frontmatter.hero,
       secret: node.frontmatter.secret || false,
@@ -120,25 +83,5 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
     });
 
     createParentChildLink({ parent: fileNode, child: node });
-  }
-
-  if (node.internal.type === `ContentfulAuthor`) {
-    createNodeField({
-      node,
-      name: `slug`,
-      value: generateSlug(
-        basePath,
-        'authors',
-        slugify(node.name, {
-          lower: true,
-        }),
-      ),
-    });
-
-    createNodeField({
-      node,
-      name: `authorsPage`,
-      value: themeOptions.authorsPage || false,
-    });
   }
 };

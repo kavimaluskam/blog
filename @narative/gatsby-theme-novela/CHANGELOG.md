@@ -28,7 +28,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * Update gatsby-plugin-emotion option ([17f9453](https://github.com/narative/gatsby-theme-novela/commit/17f9453d67b4a4110085b1841779a0db6883a0e8))
-* url icon alignment at authors page link ([5aecfbd](https://github.com/narative/gatsby-theme-novela/commit/5aecfbd63c895347ae93a2505932643f71168839))
 
 
 
@@ -78,11 +77,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # [0.18.0](https://github.com/narative/gatsby-theme-novela/compare/@narative/gatsby-theme-novela@0.17.0...@narative/gatsby-theme-novela@0.18.0) (2020-09-14)
 
 
-### Bug Fixes
-
-* **contentful:** update starter data model ([82f1973](https://github.com/narative/gatsby-theme-novela/commit/82f1973f0106cce9be8786e98251e46b8c795b0f))
-
-
 ### Features
 
 * Added ability to implement a custom article footer ([3031fef](https://github.com/narative/gatsby-theme-novela/commit/3031fef7914f1d146c97d05a9e3a5a1422123afb))
@@ -103,11 +97,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ## [0.16.5](https://github.com/narative/gatsby-theme-novela/compare/@narative/gatsby-theme-novela@0.16.4...@narative/gatsby-theme-novela@0.16.5) (2020-07-08)
-
-
-### Bug Fixes
-
-* Fixes [#372](https://github.com/narative/gatsby-theme-novela/issues/372) - allow html bio on author's page ([bda4be9](https://github.com/narative/gatsby-theme-novela/commit/bda4be9e2effe3cdb4d71dac65596dbed2609bf5))
 
 
 
@@ -302,7 +291,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **css:** style break in mobile ([13cbb1f](https://github.com/narative/gatsby-theme-novela/commit/13cbb1fae17a25da1e9db1bb8d2fdaca139d4fd3))
 * fetch social name for twitter meta tags ([b98123f](https://github.com/narative/gatsby-theme-novela/commit/b98123f8c797aed0681e46b0f36e1ff2ba6e483a))
 * load fonts locally ([9860f3c](https://github.com/narative/gatsby-theme-novela/commit/9860f3c8cbf76cc5f7f1f7f1bf75be398592646c))
-* **contentful:** source works now without local ([3299592](https://github.com/narative/gatsby-theme-novela/commit/329959220705c095ba6ce7798a3779e022bb56d6))
 
 
 ### Features
@@ -427,7 +415,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* merge allArticle and allContentfulPost queries ([f2fc225](https://github.com/narative/gatsby-theme-novela/commit/f2fc225)), closes [#198](https://github.com/narative/gatsby-theme-novela/issues/198)
 * nest nested Lists ([14f5529](https://github.com/narative/gatsby-theme-novela/commit/14f5529)), closes [#200](https://github.com/narative/gatsby-theme-novela/issues/200)
 
 

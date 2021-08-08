@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import { Link } from 'gatsby';
@@ -8,8 +8,6 @@ import Image, { ImagePlaceholder } from '@components/Image';
 
 import mediaqueries from '@styles/media';
 import { IArticle } from '@types';
-
-import { GridLayoutContext } from './Articles.List.Context';
 
 /**
  * Tiles
@@ -41,28 +39,21 @@ const ArticlesList: React.FC<ArticlesListProps> = ({
 }) => {
   if (!articles) return null;
 
-  const hasOnlyOneArticle = articles.length === 1;
-  const { gridLayout = 'tiles', hasSetGridLayout, getGridLayout } = useContext(
-    GridLayoutContext,
-  );
-
   /**
    * We're taking the flat array of articles [{}, {}, {}...]
    * and turning it into an array of pairs of articles [[{}, {}], [{}, {}], [{}, {}]...]
    * This makes it simpler to create the grid we want
    */
-  const articlePairs = articles.reduce((result, value, index, array) => {
+  const articlePairs = articles.reduce((result, _, index, array) => {
     if (index % 2 === 0) {
       result.push(array.slice(index, index + 2));
     }
     return result;
   }, []);
 
-  useEffect(() => getGridLayout(), []);
-
   return (
     <ArticlesListContainer
-      style={{ opacity: hasSetGridLayout ? 1 : 0 }}
+      style={{ opacity: 1 }}
       alwaysShowAllDetails={alwaysShowAllDetails}
     >
       {articlePairs.map((ap, index) => {
@@ -70,12 +61,7 @@ const ArticlesList: React.FC<ArticlesListProps> = ({
         const isOdd = index % 2 !== 1;
 
         return (
-          <List
-            key={index}
-            gridLayout={gridLayout}
-            hasOnlyOneArticle={hasOnlyOneArticle}
-            reverse={isEven}
-          >
+          <List key={index} reverse={isEven}>
             <ListItem article={ap[0]} narrow={isEven} />
             <ListItem article={ap[1]} narrow={isOdd} />
           </List>
@@ -90,7 +76,6 @@ export default ArticlesList;
 const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
   if (!article) return null;
 
-  const { gridLayout } = useContext(GridLayoutContext);
   const hasOverflow = narrow && article.title.length > 35;
   const imageSource = narrow ? article.hero.narrow : article.hero.regular;
   const hasHeroImage =
@@ -100,19 +85,15 @@ const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
 
   return (
     <ArticleLink to={article.slug} data-a11y="false">
-      <Item gridLayout={gridLayout}>
-        <ImageContainer narrow={narrow} gridLayout={gridLayout}>
+      <Item >
+        <ImageContainer narrow={narrow} >
           {hasHeroImage ? <Image src={imageSource} /> : <ImagePlaceholder />}
         </ImageContainer>
         <div>
-          <Title dark hasOverflow={hasOverflow} gridLayout={gridLayout}>
+          <Title dark hasOverflow={hasOverflow} >
             {article.title}
           </Title>
-          <Excerpt
-            narrow={narrow}
-            hasOverflow={hasOverflow}
-            gridLayout={gridLayout}
-          >
+          <Excerpt narrow={narrow} hasOverflow={hasOverflow}>
             {article.excerpt}
           </Excerpt>
           <MetaData>
@@ -155,11 +136,31 @@ const ArticlesListContainer = styled.div<{ alwaysShowAllDetails?: boolean }>`
   transition: opacity 0.25s;
   ${p => p.alwaysShowAllDetails && showDetails}
 `;
+ 
+const Item = styled.div`
+  position: relative;
 
-const listTile = p => css`
+  ${mediaqueries.tablet`
+    margin-bottom: 60px;
+  `}
+
+  @media (max-width: 540px) {
+    background: ${p => p.theme.colors.card};
+  }
+
+  ${mediaqueries.phablet`
+    margin-bottom: 40px;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  `}
+`;
+
+// If only 1 article, dont create 2 rows.
+const List = styled.div<{reverse: boolean}>`
   position: relative;
   display: grid;
-  grid-template-columns: ${p.reverse
+  grid-template-columns: ${p => p.reverse
     ? `${narrow} ${wide}`
     : `${wide} ${narrow}`};
   grid-template-rows: 2;
@@ -182,79 +183,13 @@ const listTile = p => css`
   `}
 `;
 
-const listItemRow = p => css`
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr 488px;
-  grid-column-gap: 96px;
-  grid-template-rows: 1;
-  align-items: center;
+
+const ImageContainer = styled.div<{ narrow: boolean }>`
   position: relative;
-  margin-bottom: 50px;
-
-  ${mediaqueries.desktop`
-    grid-column-gap: 24px;
-    grid-template-columns: 1fr 380px;
-  `}
-
-  ${mediaqueries.tablet`
-    grid-template-columns: 1fr;
-  `}
-
-  @media (max-width: 540px) {
-    background: ${p.theme.colors.card};
-  }
-
-  ${mediaqueries.phablet`
-    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-  `}
-`;
-
-const listItemTile = p => css`
-  position: relative;
-
-  ${mediaqueries.tablet`
-    margin-bottom: 60px;
-  `}
-
-  @media (max-width: 540px) {
-    background: ${p.theme.colors.card};
-  }
-
-  ${mediaqueries.phablet`
-    margin-bottom: 40px;
-    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-  `}
-`;
-
-// If only 1 article, dont create 2 rows.
-const listRow = p => css`
-  display: grid;
-  grid-template-rows: ${p.hasOnlyOneArticle ? '1fr' : '1fr 1fr'};
-`;
-
-const List = styled.div<{
-  reverse: boolean;
-  gridLayout: string;
-  hasOnlyOneArticle: boolean;
-}>`
-  ${p => (p.gridLayout === 'tiles' ? listTile : listRow)}
-`;
-
-const Item = styled.div<{ gridLayout: string }>`
-  ${p => (p.gridLayout === 'rows' ? listItemRow : listItemTile)}
-`;
-
-const ImageContainer = styled.div<{ narrow: boolean; gridLayout: string }>`
-  position: relative;
-  height: ${p => (p.gridLayout === 'tiles' ? '280px' : '220px')};
+  height: 280px;
   box-shadow: 0 30px 60px -10px rgba(0, 0, 0, ${p => (p.narrow ? 0.22 : 0.3)}),
     0 18px 36px -18px rgba(0, 0, 0, ${p => (p.narrow ? 0.25 : 0.33)});
-  margin-bottom: ${p => (p.gridLayout === 'tiles' ? '30px' : 0)};
+  margin-bottom: 30px;
   transition: transform 0.3s var(--ease-out-quad),
     box-shadow 0.3s var(--ease-out-quad);
 
@@ -279,8 +214,7 @@ const ImageContainer = styled.div<{ narrow: boolean; gridLayout: string }>`
 const Title = styled(Headings.h2)`
   font-size: 21px;
   font-family: ${p => p.theme.fonts.serif};
-  margin-bottom: ${p =>
-    p.hasOverflow && p.gridLayout === 'tiles' ? '35px' : '10px'};
+  margin-bottom: 35px;
   transition: color 0.3s ease-in-out;
   ${limitToTwoLines};
 
@@ -303,13 +237,12 @@ const Title = styled(Headings.h2)`
 const Excerpt = styled.p<{
   hasOverflow: boolean;
   narrow: boolean;
-  gridLayout: string;
 }>`
   ${limitToTwoLines};
   font-size: 16px;
   margin-bottom: 10px;
   color: ${p => p.theme.colors.grey};
-  display: ${p => (p.hasOverflow && p.gridLayout === 'tiles' ? 'none' : 'box')};
+  display: ${p => (p.hasOverflow ? 'none' : 'box')};
   max-width: ${p => (p.narrow ? '415px' : '515px')};
 
   ${mediaqueries.desktop`

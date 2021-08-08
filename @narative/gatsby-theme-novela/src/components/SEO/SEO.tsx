@@ -23,9 +23,6 @@ import { graphql, useStaticQuery } from 'gatsby';
 
 interface HelmetProps {
   articlepathName?: string;
-  authorName?: string;
-  authorsBio?: string;
-  authorsSlug?: string;
   canonicalUrl?: string;
   dateforSEO?: string;
   description?: string;
@@ -77,9 +74,6 @@ const themeUIDarkModeWorkaroundScript = [
 
 const SEO: React.FC<HelmetProps> = ({
   articlepathName,
-  authorName,
-  authorsBio,
-  authorsSlug,
   canonicalUrl,
   children,
   dateforSEO,
@@ -99,20 +93,13 @@ const SEO: React.FC<HelmetProps> = ({
   const linkedin = site.social.find(option => option.name === 'linkedin') || {};
   const medium = site.social.find(option => option.name === 'medium') || {};
 
-  const pageUrl = site.siteUrl + pathname
+  const pageUrl = site.siteUrl + pathname;
 
-  const fullURL = (path: string) =>
-    path ? `${path}` : site.siteUrl;
+  const fullURL = (path: string) => (path ? `${path}` : site.siteUrl);
 
   // If no image is provided lets looks for a default novela static image
   image = image ? image : `${site.siteUrl}/preview.jpg`;
-
-  // Checks if the source of the image is hosted on Contentful
-  if (`${image}`.includes('ctfassets')) {
-    image = `${image}`;
-  } else {
-    image = fullURL(image);
-  }
+  image = fullURL(image);
 
   let siteSchema = `{
     "@context": "https://schema.org",
@@ -183,7 +170,7 @@ const SEO: React.FC<HelmetProps> = ({
       }
     ]
   }
-`.replace(/"[^"]+"|(\s)/gm, function (matched, group1) {
+`.replace(/"[^"]+"|(\s)/gm, function(matched, group1) {
     if (!group1) {
       return matched;
     } else {
@@ -290,9 +277,6 @@ const SEO: React.FC<HelmetProps> = ({
         "isPartOf": {
           "@id": "${articlepathName}/#webpage"
         },
-        "author": {
-          "@id": "${site.siteUrl}/#/schema${authorsSlug}"
-        },
         "headline": "${title}",
         "datePublished": "${dateforSEO}",
         "dateModified": "${dateforSEO}",
@@ -306,30 +290,10 @@ const SEO: React.FC<HelmetProps> = ({
           "@id": "${articlepathName}/#primaryimage"
         },
         "inLanguage": "en-US"
-      },
-      {
-        "@type": [
-          "Person"
-        ],
-        "@id": "${site.siteUrl}/#/schema${authorsSlug}",
-        "name": "${authorName}",
-        "image": {
-          "@type": "ImageObject",
-        "@id": "${site.siteUrl}/#personlogo",
-          "inLanguage": "en-US",
-          "caption": "${authorName}"
-        },
-        "description": "${authorsBio}",
-        "sameAs": [
-          "${twitter.url}",
-          "${github.url}",
-          "${linkedin.url}",
-          "${medium.url}"
-        ]
       }
     ]
   }
-`.replace(/"[^"]+"|(\s)/gm, function (matched, group1) {
+`.replace(/"[^"]+"|(\s)/gm, function(matched, group1) {
     if (!group1) {
       return matched;
     } else {
@@ -337,7 +301,7 @@ const SEO: React.FC<HelmetProps> = ({
     }
   });
 
-  const schema = isBlogPost ? blogSchema : siteSchema
+  const schema = isBlogPost ? blogSchema : siteSchema;
 
   const metaTags = [
     { charset: 'utf-8' },
