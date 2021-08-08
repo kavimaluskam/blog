@@ -9,7 +9,6 @@ import Logo from "@components/Logo";
 import Icons from "@icons";
 import mediaqueries from "@styles/media";
 import {
-  copyToClipboard,
   getWindowDimensions,
   getBreakpointFromTheme,
 } from "@utils";
@@ -44,39 +43,6 @@ const DarkModeToggle: React.FC<{}> = () => {
     >
       <MoonOrSun isDark={isDark} />
       <MoonMask isDark={isDark} />
-    </IconWrapper>
-  );
-};
-
-const SharePageButton: React.FC<{}> = () => {
-  const [hasCopied, setHasCopied] = useState<boolean>(false);
-  const [colorMode] = useColorMode();
-  const isDark = colorMode === `dark`;
-  const fill = isDark ? "#fff" : "#000";
-
-  function copyToClipboardOnClick() {
-    if (hasCopied) return;
-
-    copyToClipboard(window.location.href);
-    setHasCopied(true);
-
-    setTimeout(() => {
-      setHasCopied(false);
-    }, 1000);
-  }
-
-  return (
-    <IconWrapper
-      isDark={isDark}
-      onClick={copyToClipboardOnClick}
-      data-a11y="false"
-      aria-label="Copy URL to clipboard"
-      title="Copy URL to clipboard"
-    >
-      <Icons.Link fill={fill} />
-      <ToolTip isDark={isDark} hasCopied={hasCopied}>
-        Copied
-      </ToolTip>
     </IconWrapper>
   );
 };
@@ -134,10 +100,7 @@ const NavigationHeader: React.FC<{}> = () => {
               <Icons.Ex fill={fill} />
             </button>
           ) : (
-            <>
-              <SharePageButton />
-              <DarkModeToggle />
-            </>
+            <DarkModeToggle />
           )}
         </NavControls>
       </NavContainer>
