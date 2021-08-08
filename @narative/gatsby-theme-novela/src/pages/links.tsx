@@ -3,7 +3,7 @@ import Layout from '@components/Layout';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 
-const LinksPage = () => {
+const LinksPage = ({ location }) => {
   return (
     <Layout pathname={location.pathname}>
       <ErrorContainer>
