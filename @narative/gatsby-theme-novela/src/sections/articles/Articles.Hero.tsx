@@ -3,7 +3,6 @@ import { graphql, useStaticQuery } from 'gatsby';
 import styled from '@emotion/styled';
 
 import Section from '@components/Section';
-import Bio from '@components/Bio';
 import Icons from '@icons';
 import mediaqueries from '@styles/media';
 import { IAuthor } from '@types';
@@ -35,14 +34,6 @@ const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
   const results = useStaticQuery(authorQuery);
   const hero = results.site.edges[0].node.siteMetadata.hero;
   const tilesIsActive = hasSetGridLayout && gridLayout === 'tiles';
-  const featuredAuthor = authors.find(author => author.featured);
-
-  if (!featuredAuthor) {
-    throw new Error(`
-      No featured Author found.
-      Please ensure you have at least featured Author.
-  `);
-  }
 
   return (
     <Section relative id="Articles__Hero">
@@ -50,7 +41,6 @@ const ArticlesHero: React.FC<IAuthor> = ({ authors }) => {
         <HeroHeading dangerouslySetInnerHTML={{ __html: hero.heading }} />
       </HeadingContainer>
       <SubheadingContainer>
-        <Bio author={featuredAuthor} />
         <GridControlsContainer>
           <GridButton
             onClick={() => setGridLayout('tiles')}
@@ -100,6 +90,7 @@ const SubheadingContainer = styled.div`
 const GridControlsContainer = styled.div`
   display: flex;
   align-items: center;
+  margin-left: auto;
 
   ${mediaqueries.tablet`
     display: none;
