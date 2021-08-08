@@ -41,13 +41,7 @@ const Footer: React.FC<{}> = () => {
   const results = useStaticQuery(siteQuery);
   const { name, social } = results.allSite.edges[0].node.siteMetadata;
 
-  const copyrightDate = (() => {
-    const { edges } = results.allMdx;
-    const years = [0, edges.length - 1].map(edge =>
-      new Date(edges[edge].node.frontmatter.date).getUTCFullYear(),
-    );
-    return years[0] === years[1] ? `${years[0]}` : `${years[0]}–${years[1]}`;
-  })();
+  const copyrightDate = new Date().getFullYear();
 
   return (
     <>
