@@ -23,9 +23,6 @@ import { graphql, useStaticQuery } from 'gatsby';
 
 interface HelmetProps {
   articlepathName?: string;
-  authorName?: string;
-  authorsBio?: string;
-  authorsSlug?: string;
   canonicalUrl?: string;
   dateforSEO?: string;
   description?: string;
@@ -77,9 +74,6 @@ const themeUIDarkModeWorkaroundScript = [
 
 const SEO: React.FC<HelmetProps> = ({
   articlepathName,
-  authorName,
-  authorsBio,
-  authorsSlug,
   canonicalUrl,
   children,
   dateforSEO,
@@ -284,9 +278,6 @@ const SEO: React.FC<HelmetProps> = ({
         "isPartOf": {
           "@id": "${articlepathName}/#webpage"
         },
-        "author": {
-          "@id": "${site.siteUrl}/#/schema${authorsSlug}"
-        },
         "headline": "${title}",
         "datePublished": "${dateforSEO}",
         "dateModified": "${dateforSEO}",
@@ -300,26 +291,6 @@ const SEO: React.FC<HelmetProps> = ({
           "@id": "${articlepathName}/#primaryimage"
         },
         "inLanguage": "en-US"
-      },
-      {
-        "@type": [
-          "Person"
-        ],
-        "@id": "${site.siteUrl}/#/schema${authorsSlug}",
-        "name": "${authorName}",
-        "image": {
-          "@type": "ImageObject",
-        "@id": "${site.siteUrl}/#personlogo",
-          "inLanguage": "en-US",
-          "caption": "${authorName}"
-        },
-        "description": "${authorsBio}",
-        "sameAs": [
-          "${twitter.url}",
-          "${github.url}",
-          "${linkedin.url}",
-          "${medium.url}"
-        ]
       }
     ]
   }

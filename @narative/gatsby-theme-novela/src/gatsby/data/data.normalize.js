@@ -29,37 +29,11 @@ function normalizeHero(article) {
   return hero;
 }
 
-function normalizeAvatar(author) {
-  let avatar = {
-    small: {},
-    medium: {},
-    large: {},
-  };
-
-  if (author.avatar) {
-    avatar = {
-      small: author.avatar.small.fluid,
-      medium: author.avatar.medium.fluid,
-      large: author.avatar.large.fluid,
-    };
-  } else {
-    console.log('\u001B[33m', `Missing avatar for "${author.name}"`);
-  }
-
-  return avatar;
-}
-
 module.exports.local = {
   articles: ({ node: article }) => {
     return {
       ...article,
       hero: normalizeHero(article),
-    };
-  },
-  authors: ({ node: author }) => {
-    return {
-      ...author,
-      avatar: normalizeAvatar(author),
     };
   },
 };

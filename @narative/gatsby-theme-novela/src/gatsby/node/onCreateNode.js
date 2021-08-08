@@ -46,45 +46,8 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
   }
 
   // ///////////////////////////////////////////////////////
-
-  if (node.internal.type === `AuthorsYaml`) {
-    const slug = node.slug
-      ? `/${node.slug}`
-      : slugify(node.name, {
-          lower: true,
-        });
-
-    const fieldData = {
-      ...node,
-      authorsPage: themeOptions.authorsPage || false,
-      slug: generateSlug(basePath, 'authors', slug),
-    };
-
-    createNode({
-      ...fieldData,
-      // Required fields.
-      id: createNodeId(`${node.id} >>> Author`),
-      parent: node.id,
-      children: [],
-      internal: {
-        type: `Author`,
-        contentDigest: crypto
-          .createHash(`md5`)
-          .update(JSON.stringify(fieldData))
-          .digest(`hex`),
-        content: JSON.stringify(fieldData),
-        description: `Author`,
-      },
-    });
-
-    createParentChildLink({ parent: fileNode, child: node });
-
-    return;
-  }
-
   if (node.internal.type === `Mdx` && source === contentPath) {
     const fieldData = {
-      author: node.frontmatter.author,
       date: node.frontmatter.date,
       hero: node.frontmatter.hero,
       secret: node.frontmatter.secret || false,

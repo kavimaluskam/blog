@@ -25,21 +25,8 @@ interface IGatsbyImageFixed extends IGatsbyImage {
   width: number;
 }
 
-export interface IAuthor {
-  authorsPage?: boolean;
-  featured?: boolean;
-  name: string;
-  slug: string;
-  bio: string;
-  avatar: {
-    image: IGatsbyImageFluid;
-    full: IGatsbyImageFluid;
-  };
-}
-
 export interface IArticle {
   slug: string;
-  authors: IAuthor[];
   excerpt: string;
   body: string;
   id: string;
@@ -75,7 +62,6 @@ export type Icon = React.FC<{
 export type Template = React.FC<{
   pageContext: {
     article: IArticle;
-    authors: IAuthor[];
     mailchimp: boolean;
     next: IArticle[];
   };

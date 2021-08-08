@@ -38,7 +38,6 @@ Novela is built by the team at [Narative](https://www.narative.co), and built fo
     - [Installation](#step-1-installation)
     - [Folder structure](#step-2-folder-structure)
     - [Using Novela Theme](#step-3-using-narativegatsby-theme-novela)
-    - [Adding an Author](#step-4-adding-an-author)
     - [Adding a Post](#step-5-adding-a-post)
     - [Configuring Site Metadata](#step-6-configuring-sitemetadata)
 
@@ -48,7 +47,6 @@ Novela is built by the team at [Narative](https://www.narative.co), and built fo
 
 - [Customization](#customization)
 
-  - [Enabling Author Pages](#enabling-author-pages)
   - [Changing styles](#changing-styles)
   - [Component shadowing](#component-shadowing)
   - [Using images](#using-images)
@@ -58,7 +56,6 @@ Novela is built by the team at [Narative](https://www.narative.co), and built fo
 - [Data Models](#data-models)
 
   - [Theme Options](#theme-options)
-  - [Author](#author)
   - [Post](#post)
   - [Site Metadata](#site-metadata)
 
@@ -100,9 +97,8 @@ yarn dev
 yarn build
 ```
 
-To learn more about adding Authors, Posts, and Site Metadata see:
+To learn more about adding Posts, and Site Metadata see:
 
-- [Adding an Author](#step-4-adding-an-author)
 - [Adding a Post](#step-5-adding-a-post)
 - [Configuring Site Metadata](#step-6-configuring-sitemetadata)
 
@@ -124,17 +120,13 @@ yarn add react react-dom gatsby @narative/gatsby-theme-novela
 
 ### Step 2: Folder structure
 
-Once you've installed React, Gatsby, and Novela you'll want to add your first Author and Post.
+Once you've installed React, Gatsby, and Novela you'll want to add your first Post.
 
 The recommended project structure for your content and site looks like this:
 
 ```
   novela-site
     ├── content
-    │ ├── authors
-    │ │   ├── avatars
-    │ │   │    └── avatar.jpg
-    │ │   └── authors.yml
     │ └── posts
     │     └── 2020-01-01-my-first-novela-post
     │         ├── images
@@ -160,41 +152,9 @@ module.exports = {
 
 ---
 
-Once you've setup `@narative/gatsby-theme-novela` plugin in `gatsby-config.js` you can start creating your first Posts. In order to create a Post you also need at least one Author.
-
-### Step 4: Adding an Author
-
-In [step 2](#step-2-folder-structure) we created the folder structure of our project. We can now add an Author by populating `/content/authors/authors.yml`:
-
-```
-  novela-site
-  └── content
-    └── authors
-        ├── avatars
-        │    └── brotzky-avatar.jpg
-        └── authors.yml
-```
-
-In `authors.yml` add an Author. There **must** be at least one `featured` Author.
-
-`/content/authors/authors.yml`:
-
-```yml
-- name: Dennis Brotzky
-  bio: |
-    Written by Dennis Brotzky who lives and works in Vancouver building useful things.
-    You should follow him on Twitter.
-  avatar: ./avatars/brotzky-avatar.jpg
-  featured: true
-  social:
-    - url: https://unsplash.com
-    - url: https://stackoverflow.com
-    - url: https://github.com
-```
+Once you've setup `@narative/gatsby-theme-novela` plugin in `gatsby-config.js` you can start creating your first Posts.
 
 ### Step 5: Adding a Post
-
-Once you have at least one Author defined in `authors.yml` you can add your first Post.
 
 Start by creating a new folder in `content/posts`. You can name it anything you like but we recommend including the date at the front to organize your posts. Once you've created your folder you can add an `index.mdx` file and an `images` folder.
 
@@ -203,7 +163,6 @@ Start by creating a new folder in `content/posts`. You can name it anything you 
 ```yml
 ---
 title: Why Narative loves Gatsby
-author: Dennis Brotzky
 date: 2019-04-27
 hero: ./images/narative-gatsby-hero.jpg
 excerpt: This is a love story about Narative and Gatsby
@@ -264,7 +223,7 @@ If you ran into problems you can reference the [example repository](https://gith
 
 # Data Sources
 
-Local is the default data source for Novela. Write MDX and YAML in order to generate posts and authors. This is the fastest and simplest way to get started.
+Local is the default data source for Novela. Write MDX and YAML in order to generate posts. This is the fastest and simplest way to get started.
 
 To learn how to use the local file system, read the [Installation](#installation) steps.
 
@@ -273,23 +232,6 @@ To learn how to use the local file system, read the [Installation](#installation
 Once you've created the Logo component it should automatically appear in your site.
 
 The technique we have used is called Component Shadowing and is a core feature of Gatsby Themes.
-
-### Enabling Author pages
-
-By default Author pages are not enabled. They can be enabled through the plugin option `authorsPage`. If you decided to enable Author pages please make sure you have all the required for each author you add.
-
-```js
-module.exports = {
-  plugins: [
-    {
-      resolve: '@narative/gatsby-theme-novela',
-      options: {
-        authorsPage: true,
-      },
-    },
-  ],
-};
-```
 
 ### Changing styles
 
@@ -410,7 +352,6 @@ plugins: [
     resolve: '@narative/gatsby-theme-novela',
     options: {
       contentPosts: 'content/posts',
-      contentAuthors: 'content/authors',
       basePath: '/',
       mailchimp: true, // make sure this is true!
     },
@@ -452,9 +393,6 @@ It is recommended to use the Default options, but if your project requires somet
 | Option                 | Default         | Description                                                                                                                         |
 | ---------------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------- |
 | contentPosts           | content/posts   | Define where you want to pull your Post data from                                                                                   |
-| contentAuthors         | content/authors | Define where you want to pull your Author data from                                                                                 |
-| authorsPage            | false           | Create Author pages                                                                                                                 |
-| authorsPath            | /authors        | Where should Author pages live?                                                                                                     |
 | rootPath               | /               | Define the index of your site                                                                                                       |
 | basePath               | /               | Where should the site be served from? `/blog` will change all paths to start with `/blog`                                           |
 | articlePermalinkFormat | :slug           | Define the format of the article permalink. Possible values: `:slug`, `:year`, `:month`, `:day`. Example: `:year/:month/:day/:slug` |
@@ -469,7 +407,6 @@ plugins: [
     resolve: '@narative/gatsby-theme-novela',
     options: {
       contentPosts: 'content/posts',
-      contentAuthors: 'content/authors',
       rootPath: '/',
       basePath: '/',
       mailchimp: true,
@@ -481,44 +418,12 @@ plugins: [
 ];
 ```
 
-## Author
-
-[View Author example](https://github.com/narative/gatsby-theme-novela-example/blob/master/content/authors/authors.yml)
-
-| Key      | Required | Type    | Desciption                                                                                                                                                                                                              |
-| -------- | :------: | :------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| name     | required | String  | The Author's full name which is used should be used as a reference in Posts                                                                                                                                             |
-| bio      | required | String  | The Author's bio which is displayed on the home page                                                                                                                                                                    |
-| avatar   | required | Image   | The Author's avatar                                                                                                                                                                                                     |
-| featured | optional | Boolean | If `true` the Author will appear on the homepage                                                                                                                                                                        |
-| slug     | optional | String  | Override the autogenerated slug based on the Author's name. Do not include any slashes.                                                                                                                                 |
-| social   | required | Array   | A list of social accounts and urls. [View supported icon/name combinations](https://github.com/narative/gatsby-theme-novela/blob/master/%40narative/gatsby-theme-novela/src/components/SocialLinks/SocialLinks.tsx#L15) |
-
-```yml
-- name: Dennis Brotzky
-  bio: |
-    Written by You. This is where your author bio lives. Share your work, your
-    joys and of course, your Twitter handle.
-  avatar: ./avatars/dennis-brotzky.jpg
-  featured: true
-  social:
-    - url: https://github.com
-    - url: https://twitter.com
-
-- name: Thiago Costa
-  bio: |
-    Written by You. This is where your author bio lives. Share your work, your
-    joys and of course, your Twitter handle.
-  avatar: ./avatars/thiago-costa.png
-```
-
 ## Post
 
 | Key          | Required | Type       | Description                                                                                   |
 | ------------ | :------: | :--------- | :-------------------------------------------------------------------------------------------- |
 | title        | required | String     | Used as title and generates a default slug. Must be unique.                                   |
 | slug         | optional | String     | Define a custom slug that will override the default title slug.                               |
-| author       | required | String Ref | Must **match** a defined Author name. Co-author posts by adding comma seperated Author names. |
 | date         | required | Date       | YYYY-MM-DD format                                                                             |
 | hero         | required | Image      | 1200px minimum width recommended                                                              |
 | excerpt      | required | String     | 140 character limit                                                                           |
@@ -531,7 +436,6 @@ plugins: [
 # novela-site/content/posts/2020-01-01/index.mdx
 ---
 title: Why Narative loves Gatsby
-author: Dennis Brotzky, Thiago Costa, Brad Tiller
 date: 2019-04-27
 hero: ./images/narative-gatsby-hero.jpg
 excerpt: This is a love story about Narative and Gatsby
@@ -623,7 +527,7 @@ Consistent, easy-to-read code lets you quickly customize every color and setting
 
 ### Show code effortlessly
 
-High quality embedded codeblocks that make authoring technical blog posts a breeze.
+High quality embedded codeblocks that make technical blog posts a breeze.
 
 ### Highlight-to-Share
 

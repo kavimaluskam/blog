@@ -24,7 +24,6 @@ module.exports.local = {
           slug
           secret
           title
-          author
           date(formatString: "MMMM Do, YYYY")
           dateForSEO: date
           timeToRead
@@ -57,38 +56,5 @@ module.exports.local = {
         }
       }
     }
-  }`,
-  authors: `{
-    authors: allAuthor {
-      edges {
-        node {
-          authorsPage
-          bio
-          id
-          name
-          social {
-            url
-          }
-          slug
-          avatar {
-            small: childImageSharp {
-              fluid(maxWidth: 50, quality: 100) {
-                ${GatsbyFluid_withWebp}
-              }
-            }
-            medium: childImageSharp {
-              fluid(maxWidth: 100, quality: 100) {
-                ${GatsbyFluid_withWebp}
-              }
-            }
-            large: childImageSharp {
-              fluid(maxWidth: 328, quality: 100) {
-                ${GatsbyFluid_withWebp}
-              }
-            }
-          }
-        }
-      }
-    }
-  }`,
+  }`
 };

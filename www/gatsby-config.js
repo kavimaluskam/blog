@@ -57,10 +57,8 @@ const plugins = [
     resolve: "@narative/gatsby-theme-novela",
     options: {
       contentPosts: "content/posts",
-      contentAuthors: "content/authors",
       rootPath: "/",
       basePath: "/",
-      authorsPage: true,
       mailchimp: true,
     },
   },

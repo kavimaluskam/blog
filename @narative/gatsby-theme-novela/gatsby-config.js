@@ -1,15 +1,12 @@
 /* eslint-disable */
 
 module.exports = ({
-  contentAuthors = 'content/authors',
   contentPosts = 'content/posts',
   pathPrefix = '',
   sources: { local } = { local: true },
 }) => ({
   pathPrefix,
-  mapping: {
-    'Mdx.frontmatter.author': `AuthorsYaml`,
-  },
+  mapping: {},
   plugins: [
     `gatsby-plugin-typescript`,
     `gatsby-image`,
@@ -66,7 +63,6 @@ module.exports = ({
                     guid: site.siteMetadata.siteUrl + edge.node.slug,
                     // body is raw JS and MDX; will need to be processed before it can be used
                     // custom_elements: [{ "content:encoded": edge.node.body }],
-                    author: edge.node.author,
                   };
                 }),
             query: `
@@ -79,7 +75,6 @@ module.exports = ({
                     date
                     slug
                     title
-                    author
                     secret
                   }
                 }
@@ -96,13 +91,6 @@ module.exports = ({
       options: {
         path: contentPosts,
         name: contentPosts,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: contentAuthors,
-        name: contentAuthors,
       },
     },
     {

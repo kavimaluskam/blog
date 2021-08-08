@@ -4,9 +4,8 @@ import styled from '@emotion/styled';
 
 import Section from '@components/Section';
 import mediaqueries from '@styles/media';
-import { IAuthor } from '@types';
 
-const authorQuery = graphql`
+const heroQuery = graphql`
   {
     site: allSite {
       edges {
@@ -24,8 +23,8 @@ const authorQuery = graphql`
   }
 `;
 
-const ArticlesHero: React.FC<IAuthor> = () => {
-  const results = useStaticQuery(authorQuery);
+const ArticlesHero: React.FC = () => {
+  const results = useStaticQuery(heroQuery);
   const hero = results.site.edges[0].node.siteMetadata.hero;
 
   return (

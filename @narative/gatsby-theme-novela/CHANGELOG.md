@@ -28,7 +28,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * Update gatsby-plugin-emotion option ([17f9453](https://github.com/narative/gatsby-theme-novela/commit/17f9453d67b4a4110085b1841779a0db6883a0e8))
-* url icon alignment at authors page link ([5aecfbd](https://github.com/narative/gatsby-theme-novela/commit/5aecfbd63c895347ae93a2505932643f71168839))
 
 
 
@@ -98,11 +97,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 ## [0.16.5](https://github.com/narative/gatsby-theme-novela/compare/@narative/gatsby-theme-novela@0.16.4...@narative/gatsby-theme-novela@0.16.5) (2020-07-08)
-
-
-### Bug Fixes
-
-* Fixes [#372](https://github.com/narative/gatsby-theme-novela/issues/372) - allow html bio on author's page ([bda4be9](https://github.com/narative/gatsby-theme-novela/commit/bda4be9e2effe3cdb4d71dac65596dbed2609bf5))
 
 
 

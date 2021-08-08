@@ -5,17 +5,13 @@ import Headings from '@components/Headings';
 import Image, { ImagePlaceholder } from '@components/Image';
 
 import mediaqueries from '@styles/media';
-import { IArticle, IAuthor } from '@types';
-
-import ArticleAuthors from './Article.Authors';
+import { IArticle } from '@types';
 
 interface ArticleHeroProps {
   article: IArticle;
-  authors: IAuthor[];
 }
 
-const ArticleHero: React.FC<ArticleHeroProps> = ({ article, authors }) => {
-  const hasCoAUthors = authors.length > 1;
+const ArticleHero: React.FC<ArticleHeroProps> = ({ article }) => {
   const hasHeroImage =
     article.hero &&
     Object.keys(article.hero.full).length !== 0 &&
@@ -25,9 +21,8 @@ const ArticleHero: React.FC<ArticleHeroProps> = ({ article, authors }) => {
     <Hero>
       <Header>
         <HeroHeading>{article.title}</HeroHeading>
-        <HeroSubtitle hasCoAUthors={hasCoAUthors}>
-          <ArticleAuthors authors={authors} />
-          <ArticleMeta hasCoAUthors={hasCoAUthors}>
+        <HeroSubtitle>
+          <ArticleMeta>
             {article.date} · {article.timeToRead} min read
           </ArticleMeta>
         </HeroSubtitle>
@@ -73,8 +68,8 @@ const Hero = styled.div`
   `}
 `;
 
-const ArticleMeta = styled.div<{ hasCoAUthors: boolean }>`
-  margin-left: ${p => (p.hasCoAUthors ? '10px' : '0')};
+const ArticleMeta = styled.div`
+  margin-left: 0;
 
   ${mediaqueries.phablet`
     margin-left: 0;
@@ -127,7 +122,7 @@ const HeroHeading = styled(Headings.h1)`
   `}
 `;
 
-const HeroSubtitle = styled.div<{ hasCoAUthors: boolean }>`
+const HeroSubtitle = styled.div`
   position: relative;
   display: flex;
   font-size: 18px;
@@ -136,22 +131,6 @@ const HeroSubtitle = styled.div<{ hasCoAUthors: boolean }>`
   ${p => mediaqueries.phablet`
     font-size: 14px;
     flex-direction: column;
-
-    ${p.hasCoAUthors &&
-      `
-        &::before {
-          content: '';
-          position: absolute;
-          left: -20px;
-          right: -20px;
-          top: -10px;
-          bottom: -10px;
-          border: 1px solid ${p.theme.colors.horizontalRule};
-          opacity: 0.5;
-          border-radius: 5px;
-        }
-    `}
-
 
     strong {
       display: block;
