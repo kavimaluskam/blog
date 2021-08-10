@@ -25,6 +25,7 @@ import ChevronLeft from './ui/ChevronLeft.Icon';
 import Copied from './ui/Copied.Icon';
 import Copy from './ui/Copy.Icon';
 import Ex from './ui/Ex.Icon';
+import Hamburger from './ui/Hamburger.Icon';
 import Link from './ui/Link.Icon';
 import ToggleOpen from './ui/ToggleOpen.Icon';
 import ToggleClose from './ui/ToggleClose.Icon';
@@ -57,6 +58,7 @@ export default {
   Copied,
   Copy,
   Ex,
+  Hamburger,
   Link,
   ToggleClose,
   ToggleOpen,
