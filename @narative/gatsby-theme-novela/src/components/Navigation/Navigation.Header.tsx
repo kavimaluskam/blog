@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Link, navigate, graphql, useStaticQuery } from 'gatsby';
+import { Link, graphql, useStaticQuery } from 'gatsby';
 import { useColorMode } from 'theme-ui';
 
 import Section from '@components/Section';
 import Logo from '@components/Logo';
 
+import Icons from '@icons';
 import mediaqueries from '@styles/media';
+import { copyToClipboard } from '@utils';
 
 const siteQuery = graphql`
   {
@@ -47,6 +49,7 @@ const DarkModeToggle: React.FC<{}> = () => {
 };
 
 const NavigationHeader: React.FC<{ pathname: string }> = ({ pathname }) => {
+  const [menuToggled, setMenuToggled] = useState<boolean>(false);
   const {
     site: {
       siteMetadata: {
@@ -70,7 +73,13 @@ const NavigationHeader: React.FC<{ pathname: string }> = ({ pathname }) => {
           <Logo fill={fill} />
           <Hidden>Navigate back to the homepage</Hidden>
         </LogoLink>
-        <NavControls>
+        <Hamburger
+          aria-label="Menu Toggle"
+          onClick={e => setMenuToggled(!menuToggled)}
+        >
+          <Icons.Hamburger fill={fill} />
+        </Hamburger>
+        <NavControls className={menuToggled ? 'menu-toggled' : ''}>
           <NavbarLinksContainer>
             {navigation.map(({ url, label }, index) => {
               return (
@@ -130,9 +139,13 @@ const NavContainer = styled.div`
   @media screen and (max-height: 800px) {
     padding-top: 50px;
   }
+
+  ${mediaqueries.tablet`
+    flex-wrap: wrap;
+  `}
 `;
 
-const LogoLink = styled(Link)`
+const LogoLink = styled(Link)<{ back: string }>`
   position: relative;
   display: flex;
   align-items: center;
@@ -140,6 +153,10 @@ const LogoLink = styled(Link)`
 
   ${mediaqueries.desktop_medium`
     left: 0
+  `}
+
+  ${mediaqueries.tablet`
+    max-width: 70%;
   `}
 
   &[data-a11y="true"]:focus::after {
@@ -161,10 +178,25 @@ const LogoLink = styled(Link)`
   }
 `;
 
+const Hamburger = styled.button`
+  display: none;
+  svg {
+    height: 30px;
+    width: 20px;
+  }
+  ${mediaqueries.tablet`
+    display: block;
+    padding: 0 8px;
+  `}
+`;
+
 const NavControls = styled.div`
   position: relative;
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  width: auto;
+
   ${mediaqueries.tablet`
     padding: 20px 8px;
     width: 100%;
@@ -220,6 +252,7 @@ const NavControlsSettings = styled.div`
   ${mediaqueries.tablet`
     width: 100%;
     justify-content: flex-end;
+    margin-left: 10px;
   `}
 `;
 
@@ -234,6 +267,10 @@ const IconWrapper = styled.button<{ isDark: boolean }>`
   justify-content: center;
   transition: opacity 0.3s ease;
   margin-left: 30px;
+
+  ${mediaqueries.desktop_up`
+    zoom: 80%;
+  `}
 
   &:hover {
     opacity: 1;
