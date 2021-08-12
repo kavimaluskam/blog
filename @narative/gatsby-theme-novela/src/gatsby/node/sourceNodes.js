@@ -9,6 +9,8 @@ module.exports = ({ actions }) => {
       tags: [String!]!
       body: String!
       hero: File @fileByRelativePath
+      heroName: String
+      heroUrl: String 
       timeToRead: Int
       canonical_url: String
     }

@@ -64,6 +64,8 @@ module.exports = ({ node, actions, getNode, createNodeId }, themeOptions) => {
       subscription: node.frontmatter.subscription !== false,
       canonical_url: node.frontmatter.canonical_url,
       tags: node.frontmatter.tags,
+      heroName: node.frontmatter.heroName,
+      heroUrl: node.frontmatter.heroUrl,
     };
 
     createNode({

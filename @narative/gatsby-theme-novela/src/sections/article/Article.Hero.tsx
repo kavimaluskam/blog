@@ -21,6 +21,8 @@ const ArticleHero: React.FC<ArticleHeroProps> = ({ article }) => {
     Object.keys(article.hero.full).length !== 0 &&
     article.hero.full.constructor === Object;
 
+  const hasHeroProvider = hasHeroImage && article.heroName && article.heroUrl;
+
   return (
     <Hero>
       <Header>
@@ -45,6 +47,19 @@ const ArticleHero: React.FC<ArticleHeroProps> = ({ article }) => {
           <ImagePlaceholder />
         )}
       </HeroImage>
+      {hasHeroProvider && (
+        <HeroProvider>
+          Photo by{` `}
+          <a
+            target="_blank"
+            rel="noopener"
+            data-a11y="false"
+            href={article.heroUrl}
+          >
+            {article.heroName}
+          </a>
+        </HeroProvider>
+      )}
     </Hero>
   );
 };
@@ -185,5 +200,20 @@ const HeroImage = styled.div`
     & > div {
       height: 220px;
     }
-`}
+  `}
+`;
+
+const HeroProvider = styled.div`
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+  color: ${p => p.theme.colors.primary};
+
+  & a {
+    color: ${p => p.theme.colors.accent};
+  }
+
+  & a:hover {
+    border-bottom: 1px solid ${p => p.theme.colors.accent};
+  }
 `;
