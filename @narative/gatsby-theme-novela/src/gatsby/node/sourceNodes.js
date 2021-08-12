@@ -6,6 +6,7 @@ module.exports = ({ actions }) => {
       title: String!
       date: Date! @dateformat
       excerpt(pruneLength: Int = 140): String!
+      tags: [String!]!
       body: String!
       hero: File @fileByRelativePath
       timeToRead: Int
