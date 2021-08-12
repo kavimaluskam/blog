@@ -9,6 +9,8 @@ import Image, { ImagePlaceholder } from '@components/Image';
 import mediaqueries from '@styles/media';
 import { IArticle } from '@types';
 
+import { slugify } from '@utils';
+
 /**
  * Tiles
  * [LONG], [SHORT]
@@ -76,7 +78,7 @@ export default ArticlesList;
 const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
   if (!article) return null;
 
-  const hasOverflow = narrow && article.title.length > 35;
+  const hasOverflow = narrow && article.title.length > 38;
   const imageSource = narrow ? article.hero.narrow : article.hero.regular;
   const hasHeroImage =
     imageSource &&
@@ -84,21 +86,30 @@ const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
     imageSource.constructor === Object;
 
   return (
-    <ArticleLink to={article.slug} data-a11y="false">
-      <Item >
-        <ImageContainer narrow={narrow} >
+    <ArticleLink>
+      <Item>
+        <ImageContainer to={article.slug} data-a11y="false" narrow={narrow}>
           {hasHeroImage ? <Image src={imageSource} /> : <ImagePlaceholder />}
         </ImageContainer>
         <div>
-          <Title dark hasOverflow={hasOverflow} >
-            {article.title}
-          </Title>
-          <Excerpt narrow={narrow} hasOverflow={hasOverflow}>
-            {article.excerpt}
-          </Excerpt>
-          <MetaData>
-            {article.date} · {article.timeToRead} min read
-          </MetaData>
+          <Tag>
+            {article.tags.map(tag => (
+              <Badge to={slugify(tag, '/tag')} data-a11y="false" key={tag}>
+                {tag}
+              </Badge>
+            ))}
+          </Tag>
+          <Link to={article.slug} data-a11y="false">
+            <Title dark hasOverflow={hasOverflow}>
+              {article.title}
+            </Title>
+            <Excerpt narrow={narrow} hasOverflow={hasOverflow}>
+              {article.excerpt}
+            </Excerpt>
+            <MetaData>
+              {article.date} · {article.timeToRead} min read
+            </MetaData>
+          </Link>
         </div>
       </Item>
     </ArticleLink>
@@ -136,7 +147,7 @@ const ArticlesListContainer = styled.div<{ alwaysShowAllDetails?: boolean }>`
   transition: opacity 0.25s;
   ${p => p.alwaysShowAllDetails && showDetails}
 `;
- 
+
 const Item = styled.div`
   position: relative;
 
@@ -157,12 +168,11 @@ const Item = styled.div`
 `;
 
 // If only 1 article, dont create 2 rows.
-const List = styled.div<{reverse: boolean}>`
+const List = styled.div<{ reverse: boolean }>`
   position: relative;
   display: grid;
-  grid-template-columns: ${p => p.reverse
-    ? `${narrow} ${wide}`
-    : `${wide} ${narrow}`};
+  grid-template-columns: ${p =>
+    p.reverse ? `${narrow} ${wide}` : `${wide} ${narrow}`};
   grid-template-rows: 2;
   column-gap: 30px;
 
@@ -183,8 +193,8 @@ const List = styled.div<{reverse: boolean}>`
   `}
 `;
 
-
-const ImageContainer = styled.div<{ narrow: boolean }>`
+const ImageContainer = styled(Link)<{ narrow: boolean }>`
+  display: block;
   position: relative;
   height: 280px;
   box-shadow: 0 30px 60px -10px rgba(0, 0, 0, ${p => (p.narrow ? 0.22 : 0.3)}),
@@ -209,6 +219,18 @@ const ImageContainer = styled.div<{ narrow: boolean }>`
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
   `}
+`;
+
+const Tag = styled.div`
+  margin-bottom: 12px;
+`;
+
+const Badge = styled(Link)`
+  color: ${p => p.theme.colors.background};
+  background-color: ${p => p.theme.colors.accent};
+  padding: 4px 8px;
+  margin-right: 8px;
+  border-radius: 4px;
 `;
 
 const Title = styled(Headings.h2)`
@@ -273,7 +295,7 @@ const MetaData = styled.div`
   `}
 `;
 
-const ArticleLink = styled(Link)`
+const ArticleLink = styled.div`
   position: relative;
   display: block;
   width: 100%;
