@@ -37,6 +37,8 @@ export interface IArticle {
     regular: IGatsbyImageFluid;
     seo: string;
   };
+  heroName: string;
+  heroUrl: string;
   timeToRead: number;
   date: string;
   secret: boolean;
