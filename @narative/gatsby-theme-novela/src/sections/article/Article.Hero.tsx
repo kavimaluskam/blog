@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
+import { Link } from 'gatsby';
+
 import Headings from '@components/Headings';
 import Image, { ImagePlaceholder } from '@components/Image';
 
 import mediaqueries from '@styles/media';
 import { IArticle } from '@types';
+
+import { slugify } from '@utils';
 
 interface ArticleHeroProps {
   article: IArticle;
@@ -20,6 +24,13 @@ const ArticleHero: React.FC<ArticleHeroProps> = ({ article }) => {
   return (
     <Hero>
       <Header>
+        <HeroTag>
+          {article.tags.map(tag => (
+            <Badge to={slugify(tag, '/tag')} data-a11y="false" key={tag}>
+              {tag}
+            </Badge>
+          ))}
+        </HeroTag>
         <HeroHeading>{article.title}</HeroHeading>
         <HeroSubtitle>
           <ArticleMeta>
@@ -103,6 +114,18 @@ const Header = styled.header`
   @media screen and (max-height: 700px) {
     margin: 100px auto;
   }
+`;
+
+const HeroTag = styled.div`
+  margin-bottom: 12px;
+`;
+
+const Badge = styled(Link)`
+  color: ${p => p.theme.colors.background};
+  background-color: ${p => p.theme.colors.accent};
+  padding: 4px 8px;
+  margin-right: 8px;
+  border-radius: 4px;
 `;
 
 const HeroHeading = styled(Headings.h1)`

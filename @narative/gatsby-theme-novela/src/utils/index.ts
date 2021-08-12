@@ -329,3 +329,14 @@ export function copyToClipboard(toCopy: string) {
   document.execCommand(`copy`);
   document.body.removeChild(el);
 }
+
+export const slugify = (string, base) => {
+  const slug = string
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036F]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+
+  return `${base}/${slug}`.replace(/\/\/+/g, "/");
+}
