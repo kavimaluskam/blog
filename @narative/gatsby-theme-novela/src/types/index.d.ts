@@ -28,6 +28,7 @@ interface IGatsbyImageFixed extends IGatsbyImage {
 export interface IArticle {
   slug: string;
   excerpt: string;
+  tags: string[];
   body: string;
   id: string;
   hero: {
@@ -39,6 +40,11 @@ export interface IArticle {
   timeToRead: number;
   date: string;
   secret: boolean;
+}
+
+export interface ITag {
+  name: string;
+  count: number;
 }
 
 interface IArticleQuery {

@@ -12,7 +12,7 @@ const templatesDirectory = path.resolve(__dirname, '../../templates');
 const templates = {
   articles: path.resolve(templatesDirectory, 'articles.template.tsx'),
   article: path.resolve(templatesDirectory, 'article.template.tsx'),
-  // author: path.resolve(templatesDirectory, 'author.template.tsx'),
+  tag: path.resolve(templatesDirectory, 'tag.template.tsx'),
 };
 
 const query = require('../data/data.query');
@@ -29,6 +29,16 @@ function buildPaginatedPath(index, basePath) {
 
 const byDate = (a, b) => new Date(b.dateForSEO) - new Date(a.dateForSEO);
 
+const slugify = (string, base) => {
+  const slug = string
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036F]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '');
+
+  return `${base}/${slug}`.replace(/\/\/+/g, '/');
+};
 // ///////////////////////////////////////////////////////
 
 module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
@@ -55,9 +65,10 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
   const { local = true } = sources;
 
   let articles;
+  let tags;
 
   const dataSources = {
-    local: { articles: [] },
+    local: { articles: [], tags: [] },
   };
 
   if (rootPath) {
@@ -72,9 +83,16 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
     try {
       log('Querying Articles source:', 'Local');
       const localArticles = await graphql(query.local.articles);
+      const localTags = await graphql(query.local.tags);
 
       dataSources.local.articles = localArticles.data.articles.edges.map(
         normalize.local.articles,
+      );
+      dataSources.local.tags = localTags.data.tags.group.map(
+        ({ fieldValue, totalCount }) => ({
+          name: fieldValue,
+          count: totalCount,
+        }),
       );
     } catch (error) {
       console.error(error);
@@ -83,6 +101,7 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
 
   // Combining together all the articles from different sources
   articles = [...dataSources.local.articles].sort(byDate);
+  tags = [...dataSources.local.tags];
 
   const articlesThatArentSecret = articles.filter(article => !article.secret);
 
@@ -147,6 +166,29 @@ module.exports = async ({ actions: { createPage }, graphql }, themeOptions) => {
         canonicalUrl: article.canonical_url,
         mailchimp,
         next,
+      },
+    });
+  });
+
+  tags.forEach(tag => {
+    const articlesWithTag = articlesThatArentSecret.filter(article =>
+      article.tags.includes(tag.name),
+    );
+
+    const path = slugify(tag.name, '/tag');
+
+    createPaginatedPages({
+      edges: articlesWithTag,
+      pathPrefix: path,
+      createPage,
+      pageLength,
+      pageTemplate: templates.tag,
+      buildPath: buildPaginatedPath,
+      context: {
+        tag,
+        originalPath: path,
+        skip: pageLength,
+        limit: pageLength,
       },
     });
   });

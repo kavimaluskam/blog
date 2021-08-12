@@ -72,6 +72,7 @@ module.exports = ({
                   node {
                     body
                     excerpt
+                    tags
                     date
                     slug
                     title

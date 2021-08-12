@@ -28,6 +28,7 @@ module.exports.local = {
           dateForSEO: date
           timeToRead
           excerpt
+          tags
           canonical_url
           subscription
           body
@@ -54,6 +55,14 @@ module.exports.local = {
             }
           }
         }
+      }
+    }
+  }`,
+  tags: `{
+    tags: allArticle {
+      group(field: tags) {
+        fieldValue
+        totalCount
       }
     }
   }`,
