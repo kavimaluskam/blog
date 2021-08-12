@@ -58,4 +58,12 @@ module.exports.local = {
       }
     }
   }`,
+  tags: `{
+    tags: allArticle {
+      group(field: tags) {
+        fieldValue
+        totalCount
+      }
+    }
+  }`,
 };
