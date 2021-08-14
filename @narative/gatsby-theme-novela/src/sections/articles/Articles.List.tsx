@@ -223,6 +223,12 @@ const ImageContainer = styled(Link)<{ narrow: boolean }>`
 
 const Tag = styled.div`
   margin-bottom: 12px;
+
+  ${mediaqueries.phablet`
+    margin-left: 15px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+  `}
 `;
 
 const Badge = styled(Link)`
@@ -250,7 +256,7 @@ const Title = styled(Headings.h2)`
 
   ${mediaqueries.phablet`
     font-size: 22px;  
-    padding: 30px 20px 0;
+    padding: 15px 20px 0;
     margin-bottom: 10px;
     -webkit-line-clamp: 3;
   `}

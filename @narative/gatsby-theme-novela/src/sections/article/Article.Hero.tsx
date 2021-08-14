@@ -96,10 +96,6 @@ const Hero = styled.div`
 
 const ArticleMeta = styled.div`
   margin-left: 0;
-
-  ${mediaqueries.phablet`
-    margin-left: 0;
-  `}
 `;
 
 const Header = styled.header`
