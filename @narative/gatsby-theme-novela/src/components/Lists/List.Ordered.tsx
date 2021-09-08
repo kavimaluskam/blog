@@ -63,7 +63,7 @@ const OrderedList = styled.ol`
     font-weight: 600;
     position: absolute;
     left: -3rem;
-    top: -0.3rem;
+    top: 0.2rem;
     font-size: 2rem;
 
     ${mediaqueries.tablet`

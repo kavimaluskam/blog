@@ -7,14 +7,12 @@ import Layout from '@components/Layout';
 import MDXRenderer from '@components/MDX';
 import Progress from '@components/Progress';
 import Section from '@components/Section';
-import Subscription from '@components/Subscription';
 
 import mediaqueries from '@styles/media';
 import { debounce } from '@utils';
 
 import ArticleAside from '../sections/article/Article.Aside';
 import ArticleHero from '../sections/article/Article.Hero';
-import ArticleControls from '../sections/article/Article.Controls';
 import ArticlesNext from '../sections/article/Article.Next';
 import ArticleSEO from '../sections/article/Article.SEO';
 import ArticleShare from '../sections/article/Article.Share';
@@ -88,9 +86,6 @@ const Article: Template = ({ pageContext, location }) => {
       <ArticleAside contentHeight={contentHeight}>
         <Progress contentHeight={contentHeight} />
       </ArticleAside>
-      <MobileControls>
-        <ArticleControls />
-      </MobileControls>
       <ArticleBody ref={contentSectionRef}>
         <MDXRenderer content={article.body}>
           <ArticleShare />
@@ -109,17 +104,6 @@ const Article: Template = ({ pageContext, location }) => {
 };
 
 export default Article;
-
-const MobileControls = styled.div`
-  position: relative;
-  padding-top: 60px;
-  transition: background 0.2s linear;
-  text-align: center;
-
-  ${mediaqueries.tablet_up`
-    display: none;
-  `}
-`;
 
 const ArticleBody = styled.article`
   position: relative;
