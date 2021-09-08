@@ -97,10 +97,6 @@ const SEO: React.FC<HelmetProps> = ({
 
   const fullURL = (path: string) => (path ? `${path}` : site.siteUrl);
 
-  // If no image is provided lets looks for a default novela static image
-  image = image ? image : `${site.siteUrl}/preview.jpg`;
-  image = fullURL(image);
-
   let siteSchema = `{
     "@context": "https://schema.org",
     "@graph": [
@@ -323,18 +319,20 @@ const SEO: React.FC<HelmetProps> = ({
     { name: 'twitter:title', content: title || site.title },
     { name: 'twitter:description', content: description || site.description },
     { name: 'twitter:creator', content: twitter.url },
-    {
-      name: 'twitter:image',
-      content: image,
-    },
 
     { property: 'og:type', content: 'website' },
     { property: 'og:title', content: title || site.title },
     { property: 'og:url', content: articlepathName || pageUrl },
-    { property: 'og:image', content: image },
     { property: 'og:description', content: description || site.description },
     { property: 'og:site_name', content: site.name },
   ];
+
+  if (image) {
+    image = fullURL(image);
+
+    metaTags.push({ name: 'twitter:image', content: image });
+    metaTags.push({ property: 'og:image', content: image });
+  }
 
   if (published) {
     metaTags.push({ name: 'article:published_time', content: published });
