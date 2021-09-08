@@ -80,6 +80,7 @@ const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
 
   const hasOverflow = narrow && article.title.length > 38;
   const imageSource = narrow ? article.hero.narrow : article.hero.regular;
+  const imageAlt = `Photo by ${article.heroName}`;
   const hasHeroImage =
     imageSource &&
     Object.keys(imageSource).length !== 0 &&
@@ -89,7 +90,11 @@ const ListItem: React.FC<ArticlesListItemProps> = ({ article, narrow }) => {
     <ArticleLink>
       <Item>
         <ImageContainer to={article.slug} data-a11y="false" narrow={narrow}>
-          {hasHeroImage ? <Image src={imageSource} /> : <ImagePlaceholder />}
+          {hasHeroImage ? (
+            <Image src={imageSource} alt={imageAlt} />
+          ) : (
+            <ImagePlaceholder />
+          )}
         </ImageContainer>
         <div>
           <Tag>

@@ -42,7 +42,7 @@ const ArticleHero: React.FC<ArticleHeroProps> = ({ article }) => {
       </Header>
       <HeroImage id="ArticleImage__Hero">
         {hasHeroImage ? (
-          <Image src={article.hero.full} />
+          <Image src={article.hero.full} alt={`Photo by ${article.heroName}`} />
         ) : (
           <ImagePlaceholder />
         )}
