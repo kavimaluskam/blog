@@ -33,6 +33,7 @@ const ArticleSEO: React.FC<ArticleSEOProps> = ({
 }) => {
   const results = useStaticQuery(siteQuery);
   const siteUrl = results.allSite.edges[0].node.siteMetadata.siteUrl;
+  const name = results.allSite.edges[0].node.siteMetadata.name;
 
   imagelocation = `${siteUrl + article.hero.seo.src}`;
 
@@ -46,7 +47,7 @@ const ArticleSEO: React.FC<ArticleSEOProps> = ({
       articlepathName={siteUrl + location.pathname}
       published={article.date}
       timeToRead={article.timeToRead}
-      title={article.title}
+      title={`${article.title} | ${name}`}
       isSecret={article.secret}
     ></SEO>
   );
