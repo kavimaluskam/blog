@@ -310,12 +310,8 @@ const SEO: React.FC<HelmetProps> = ({
       content: 'IE=edge',
     },
     {
-      name: 'viewport',
-      content: 'width=device-width, initial-scale=1',
-    },
-    {
       name: 'theme-color',
-      content: '#fff',
+      content: '#6166DC',
     },
     { itemprop: 'name', content: title || site.title },
     { itemprop: 'description', content: description || site.description },
