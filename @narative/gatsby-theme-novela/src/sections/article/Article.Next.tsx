@@ -49,6 +49,7 @@ const GridItem: React.FC<GridItemProps> = ({ article, narrow }) => {
 
   const hasOverflow = narrow && article.title.length > 35;
   const imageSource = narrow ? article.hero.narrow : article.hero.regular;
+  const imageAlt = `Photo by ${article.heroName}`;
 
   return (
     <ArticleLink
@@ -58,7 +59,7 @@ const GridItem: React.FC<GridItemProps> = ({ article, narrow }) => {
     >
       <Item>
         <ImageContainer>
-          <Image src={imageSource} />
+          <Image src={imageSource} alt={imageAlt} />
         </ImageContainer>
         <Title dark hasOverflow={hasOverflow}>
           {article.title}

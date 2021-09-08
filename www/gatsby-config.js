@@ -1,14 +1,14 @@
 require("dotenv").config();
 
 const siteMetadata = {
-  title: `Alex Kam`,
-  name: `Alex Kam`,
+  title: `@kavimaluskam | A Blog by Alex Kam`,
+  name: `@kavimaluskam`,
   siteUrl: `https://kavimaluskam.dev`,
-  description: `About Data Engineering, Decentrailization, Shoegaze and Manga`,
+  description: `Personal Blog by Alex Kam. About Data Engineering, Decentralization and more.`,
   hero: {
-    heading: `Alex Kam`,
-    description: `About Data Engineering, Decentrailization, Shoegaze and Manga`,
-    maxWidth: 600,
+    heading: `@kavimaluskam`,
+    description:`Personal Blog by Alex Kam. About Data Engineering, Decentralization and more.`,
+    maxWidth: 1200,
   },
   social: [
     {
