@@ -21,15 +21,15 @@ export default {
   inputBackground: "rgba(0, 0, 0, 0.05)",
   modes: {
     dark: {
-      grey: "#73737D",
+      grey: "#93939D",
       primary: "#fff",
       secondary: "#fff",
-      accent: "#E9DAAC",
-      background: "#111216",
+      accent: "#ffa7c4",
+      background: "#282c35",
       hover: "rgba(255, 255, 255, 0.07)",
       gradient:
-        "linear-gradient(180deg, #111216 0%, rgba(66, 81, 98, 0.36) 100%)",
-      articleText: "#fff",
+        "linear-gradient(180deg, #282c35 0%, rgba(66, 81, 98, 0.36) 100%)",
+      articleText: "#ffffffe0",
       track: "rgba(255, 255, 255, 0.3)",
       progress: "#fff",
       card: "#1D2128",
