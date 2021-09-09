@@ -4,16 +4,15 @@ import { Link, graphql, useStaticQuery } from 'gatsby';
 import { useColorMode } from 'theme-ui';
 
 import Section from '@components/Section';
-import Logo from '@components/Logo';
 
 import Icons from '@icons';
 import mediaqueries from '@styles/media';
-import { copyToClipboard } from '@utils';
 
 const siteQuery = graphql`
   {
     site {
       siteMetadata {
+        name
         header {
           navigation {
             label
@@ -48,11 +47,15 @@ const DarkModeToggle: React.FC<{}> = () => {
   );
 };
 
-const NavigationHeader: React.FC<{ pathname: string }> = ({ pathname }) => {
+const NavigationHeader: React.FC<{ pathname: string; hasLogo: boolean }> = ({
+  pathname,
+  hasLogo = false,
+}) => {
   const [menuToggled, setMenuToggled] = useState<boolean>(false);
   const {
     site: {
       siteMetadata: {
+        name,
         header: { navigation },
       },
     },
@@ -70,7 +73,7 @@ const NavigationHeader: React.FC<{ pathname: string }> = ({ pathname }) => {
           title="Navigate back to the homepage"
           aria-label="Navigate back to the homepage"
         >
-          <Logo fill={fill} />
+          {hasLogo && name}
           <Hidden>Navigate back to the homepage</Hidden>
         </LogoLink>
         <Hamburger
@@ -150,7 +153,6 @@ const LogoLink = styled(Link)<{ back: string }>`
   display: flex;
   align-items: center;
   left: 0;
-
   ${mediaqueries.desktop_medium`
     left: 0
   `}
@@ -158,23 +160,13 @@ const LogoLink = styled(Link)<{ back: string }>`
   ${mediaqueries.tablet`
     max-width: 70%;
   `}
-
-  &[data-a11y="true"]:focus::after {
-    content: '';
-    position: absolute;
-    left: -10%;
-    top: -30%;
-    width: 120%;
-    height: 160%;
-    border: 2px solid ${p => p.theme.colors.accent};
-    background: rgba(255, 255, 255, 0.01);
-    border-radius: 5px;
-  }
-
+  color: ${p => p.theme.colors.grey};
+  font-size: 20px;
   &:hover {
-    ${BackArrowIconContainer} {
-      transform: translateX(-3px);
-    }
+    color: ${p => p.theme.colors.primary};
+  }
+  &.active {
+    color: ${p => p.theme.colors.primary};
   }
 `;
 

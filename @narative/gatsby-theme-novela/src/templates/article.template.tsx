@@ -80,7 +80,7 @@ const Article: Template = ({ pageContext, location }) => {
   }, []);
 
   return (
-    <Layout pathname={location.pathname}>
+    <Layout pathname={location.pathname} hasLogo={true}>
       <ArticleSEO article={article} location={location} />
       <ArticleHero article={article} />
       <ArticleAside contentHeight={contentHeight}>
